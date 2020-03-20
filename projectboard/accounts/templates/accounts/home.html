@@ -1,7 +1,7 @@
 {% extends 'accounts/header.html' %}
 {% block content %}
 	{% if user.is_authenticated %}
-		{{user.username}}
+		{{user.username}} 
 		<a href="/logout">Logout</a>
 	{% else %}
 	<h4><a href="/login">LogIn</a></h4>
