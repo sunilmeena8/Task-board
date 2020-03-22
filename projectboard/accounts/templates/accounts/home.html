@@ -1,10 +1,8 @@
 {% extends 'accounts/header.html' %}
 {% block content %}
 	{% if user.is_authenticated %}
-		{{user.username}} 
-		<a href="/logout">Logout</a>
+		<a href="/personal_board">Personal board</a>
+		<a href="/team_board">Team board</a>
 	{% else %}
-	<h4><a href="/login">LogIn</a></h4>
-	<h4><a href="/register">Register</a></h4>
 	{% endif %}
 {% endblock %}

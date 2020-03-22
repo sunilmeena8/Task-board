@@ -1,0 +1,16 @@
+<body>
+
+<div class="topnav">
+      <a href="/" class="nav">T-Board</a>
+        {% if user.is_authenticated %}
+          <a href="/myaccount" class="nav">{{user.username}}</a>
+          <a href="/logout" class="nav">Logout</a>
+        {% else %}
+          <a href="/login" class="nav">LogIn</a>
+          <a href="/register" class="nav">Register</a>
+        {% endif %}
+</div>
+
+
+
+</body>

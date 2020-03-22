@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-	path('',views.homeview,name = 'homepage'),
-	path('login/',views.login_req),
-	path('register/',views.register),
-	path('logout/',views.logout_req),
+    path('personal_board/',views.personal_board,name="personal_board"),
+    path('personal_board_lists/',views.personal_board_list,name="personal_board_list"),
+    path('personal_board_list_cards/',views.personal_board_list_card,name="personal_board_list_card"),
+    path('addpersonalboard/',views.add_personal_board),
+    path('addpersonalboardlist/',views.add_personal_board_list),
+    path('addpersonalboardlistcard/',views.add_personal_board_list_card),
 ]
