@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .models import TeamBoard,TeamBoardList,TeamBoardListCard
 from personal_board_system.forms import AddBoardForm,AddBoardListCardForm,AddBoardListForm
 from django.db import connection
+from .forms import AddBoardMemberForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 def team_board(request):
@@ -86,3 +88,33 @@ def add_team_board_list_card(request):
 	list_id = request.GET.get('id')
 	
 	return(render(request,"team_board_system/addboardlistcard.html",{'form':form,"list_id":list_id}))
+
+def add_team_board_member(request):
+	user=request.user
+	if(request.method=='GET'):
+		form = AddBoardMemberForm(request.GET)
+		if(form.is_valid()):
+			board_id = request.GET.get('board_id')
+			username = form.cleaned_data.get('username')
+			add_user = User.objects.get(username = username)
+			add_user_id = add_user.id
+			print(board_id,add_user_id)
+			cursor = connection.cursor()
+			cursor.execute('insert into team_board_system_teamboard_user (teamboard_id,user_id) values (%s,%s)',[board_id,add_user_id])
+			return(redirect('team_board'))
+	else:
+		form = AddBoardMemberForm()
+	board_id = request.GET.get('id')
+	return(render(request,"team_board_system/addboardlist.html",{'form':form,"board_id":board_id}))
+
+def team_board_member(request):
+	board_id = request.GET.get('id')
+	cursor = connection.cursor()
+	cursor.execute('select user_id from team_board_system_teamboard_user where teamboard_id = %s',[board_id])
+	member_ids = cursor.fetchall()
+	members = []
+	for  member_id in member_ids:
+		members.append(User.objects.get(id = member_id[0]))
+	board = TeamBoard.objects.get(id=board_id)
+	
+	return(render(request,'team_board_system/teamboardmembers.html',{'members':members,'board':board}))

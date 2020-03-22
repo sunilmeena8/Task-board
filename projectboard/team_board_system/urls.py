@@ -24,4 +24,6 @@ urlpatterns = [
     path('addteamboard/',views.add_team_board),
     path('addteamboardlist/',views.add_team_board_list),
     path('addteamboardlistcard/',views.add_team_board_list_card),
+    path('addteamboardmember/',views.add_team_board_member),
+    path('teamboardmember/',views.team_board_member),
 ]

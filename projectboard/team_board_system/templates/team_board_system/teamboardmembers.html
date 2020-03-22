@@ -1,0 +1,9 @@
+{% extends "accounts/header.html" %}
+{% block content %}
+	{{board.title}}
+	{% for member in members %}
+		<p>{{member.username}}</p>
+	{% endfor %}
+	<h4><a href="/addteamboardmember/?id={{board.id}}">+</a>Addmember</h4>
+
+{% endblock %}
