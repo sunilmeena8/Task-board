@@ -1,9 +1,17 @@
 {% extends "accounts/header.html" %}
 {% block content %}
-	{{board.title}}
+	<h2><a href="/team_board">Team Board</a>->{{board.title}}</h2>
+	<br><br>
+	<table border=1px solid >
+	<tr>
 	{% for member in members %}
+		<td>
 		<p>{{member.username}}</p>
+		</td>
 	{% endfor %}
+	<td>
 	<h4><a href="/addteamboardmember/?id={{board.id}}">+</a>Addmember</h4>
-
+	</td>
+	</tr>
+	</table>
 {% endblock %}

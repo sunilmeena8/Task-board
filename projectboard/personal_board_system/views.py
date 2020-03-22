@@ -14,7 +14,6 @@ def personal_board_list(request):
 	user= request.user
 	
 	board_id = request.GET.get('id')
-	print(board_id)
 	board = PersonalBoard.objects.get(id=board_id)
 	# print(board.id,board.title)
 	lists = PersonalBoardList.objects.filter(board=board)
@@ -25,14 +24,16 @@ def personal_board_list(request):
 def personal_board_list_card(request):
 	
 	user = request.user
-	temp = request.GET.get('id')
+	temp = request.GET.get('list_id')
 	if(temp is not None):
 		list_id = temp
-	
+	board_id = request.GET.get('board_id')
+
 	list = PersonalBoardList.objects.get(id=list_id)
+	board = PersonalBoard.objects.get(id=board_id)
 	cards = PersonalBoardListCard.objects.filter(list=list)
-	print(cards)
-	return(render(request,"personal_board_system/personalboardlistcards.html",{'list':list,'personal_board_list_cards':cards}))
+
+	return(render(request,"personal_board_system/personalboardlistcards.html",{'list':list,"board":board,'personal_board_list_cards':cards}))
 
 def add_personal_board(request):
 	user=request.user

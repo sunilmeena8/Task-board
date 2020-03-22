@@ -1,8 +1,22 @@
 {% extends "accounts/header.html" %}
 {% block content %}
-	{{list.title}}
+	
+	<h2><a href="/personal_board">Personal Board</a>->{{board.title}}->{{list.title}}</h2>
+	<br><br>
+	<table border=1px solid >
+	<tr>
 	{% for team_board_list_card in team_board_list_cards %}
-		<p>Title: {{team_board_list_card.title}} Due date: {{team_board_list_card.due_date}} Attachment: {{team_board_list_card.attachment}}</p>
+		{% if team_board_list_card.archived == False %}
+		<td>
+		<p>Title: {{team_board_list_card.title}}</p>
+		<p> Due date: {{team_board_list_card.due_date}}</p>
+		<p> Attachment: {{team_board_list_card.attachment}}</p>
+		</td>
+		{% endif %}
 	{% endfor %}
+	
+	<td>
 	<h4><a href="/addteamboardlistcard/?id={{list.id}}">+</a>Addboardlistcard</h4>
+	</td>
+	</tr>
 {% endblock %}

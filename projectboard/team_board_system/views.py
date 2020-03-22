@@ -22,13 +22,13 @@ def team_board_list(request):
 
 def team_board_list_card(request):
 	user = request.user
-	temp = request.GET.get('id')
-	if(temp is not None):
-		list_id = temp
+	list_id = request.GET.get('list_id')
+	board_id = request.GET.get('board_id')
+	# print(list_id,board_id)
+	board = TeamBoard.objects.get(id=board_id)
 	list = TeamBoardList.objects.get(id=list_id)
 	cards = TeamBoardListCard.objects.filter(list=list)
-	print(cards)
-	return(render(request,"team_board_system/teamboardlistcards.html",{'list':list,'team_board_list_cards':cards}))
+	return(render(request,"team_board_system/teamboardlistcards.html",{'list':list,'board':board,'team_board_list_cards':cards}))
 
 def add_team_board(request):
 	user=request.user

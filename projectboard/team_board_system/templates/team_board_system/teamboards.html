@@ -1,10 +1,18 @@
 {% extends "accounts/header.html" %}
 {% block content %}
+	<h2>Team Board</h2>
+	<br><br>
+	<table border=1px solid >
+	<tr>
 	{% for team_board in team_boards %}
+		<td>
 		<a href="/team_board_lists/?id={{team_board.id}}">{{team_board.title}}</a>
 		<p><a href="/teamboardmember/?id={{team_board.id}}">Members</a></h4>
+		</td>
 	{% endfor %}
-
+	<td>
 	<h4><a href="/addteamboard">+</a>Addboard</h4>
-
+	</td>
+	</tr>
+	</table>
 {% endblock %}

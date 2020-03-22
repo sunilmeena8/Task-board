@@ -1,8 +1,17 @@
 {% extends "accounts/header.html" %}
 {% block content %}
+	<h2>Personal Board</h2>
+	<br><br>
+	<table border=1px solid >
+	<tr>
 	{% for personal_board in personal_boards %}
+		<td>
 		<a href="/personal_board_lists/?id={{personal_board.id}}">{{personal_board.title}}</a>
+		</td>
 	{% endfor %}
+	<td>
 	<h4><a href="/addpersonalboard">+</a>Addboard</h4>
-
+	</td>
+	</tr>
+	</table>
 {% endblock %}
