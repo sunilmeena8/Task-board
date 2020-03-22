@@ -1,0 +1,11 @@
+{% extends 'accounts/header.html' %}
+{% block content %}
+	<h3>Add board list card</h3>
+	<form method="POST" enctype = "multipart/form-data">
+		{% csrf_token %}
+		{{form.as_p}}
+
+		<input type="hidden" name="list_id" value={{list_id}}>
+		<button type="submit">Add</button>
+	</form>
+{% endblock %}

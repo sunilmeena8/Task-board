@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'personal_board_system',
+    'team_board_system',
 ]
 
 MIDDLEWARE = [

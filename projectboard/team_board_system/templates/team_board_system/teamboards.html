@@ -1,0 +1,8 @@
+{% extends "accounts/header.html" %}
+{% block content %}
+	{% for team_board in team_boards %}
+		<a href="/team_board_lists/?id={{team_board.id}}">{{team_board.title}}</a>
+	{% endfor %}
+	<h4><a href="/addteamboard">+</a>Addboard</h4>
+
+{% endblock %}

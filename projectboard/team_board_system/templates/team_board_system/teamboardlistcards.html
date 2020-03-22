@@ -1,0 +1,8 @@
+{% extends "accounts/header.html" %}
+{% block content %}
+	{{list.title}}
+	{% for team_board_list_card in team_board_list_cards %}
+		<p>Title: {{team_board_list_card.title}} Due date: {{team_board_list_card.due_date}} Attachment: {{team_board_list_card.attachment}}</p>
+	{% endfor %}
+	<h4><a href="/addteamboardlistcard/?id={{list.id}}">+</a>Addboardlistcard</h4>
+{% endblock %}
