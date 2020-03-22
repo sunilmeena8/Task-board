@@ -13,7 +13,7 @@ def personal_board(request):
 def personal_board_list(request):
 	user= request.user
 	
-	board_id = request.GET.get(' id')
+	board_id = request.GET.get('id')
 	print(board_id)
 	board = PersonalBoard.objects.get(id=board_id)
 	# print(board.id,board.title)
