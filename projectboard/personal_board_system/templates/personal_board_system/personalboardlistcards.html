@@ -3,17 +3,28 @@
 	<h2><a href="/personal_board">Personal Board</a>->{{board.title}}->{{list.title}}</h2>
 	<br><br>
 	<table border=1px solid >
-	<tr>
+	
+	
 	{% for personal_board_list_card in personal_board_list_cards %}
+		{% if personal_board_list_card.archived == False %}
+		<tr>
 		<td>
 		<p>Title: {{personal_board_list_card.title}}  </p>
 		<p>Due date: {{personal_board_list_card.due_date}}</p>
-		<p>Attachment: {{personal_board_list_card.attachment}}</p>
+		<p>Attachment: <embed src="media/{{personal_board_list_card.attachment}}" width="80px" height="100px" /></p>
+
+		<a href="/edittitlepersonalboardlistcard/?board_id={{board.id}}&list_id={{list.id}}&card_id={{personal_board_list_card.id}}">Edit</a>
+		<a href ="/archivepersonalboardlistcard/?board_id={{board.id}}&list_id={{list.id}}&card_id={{personal_board_list_card.id}}">Archive</a>
+		<a href="/deletepersonalboardlistcard/?list_id={{list.id}}&board_id={{board.id}}&card_id={{personal_board_list_card.id}}">Delete</a>
 		</td>
+		</tr>
+		{%  endif %}
 	{% endfor %}
 	
+	<tr>
 	<td>
-	<h4><a href="/addpersonalboardlistcard/?id={{list.id}}">+</a>Addboardlistcard</h4>
-	</td>
+	<h4><a href="/addpersonalboardlistcard/?board_id={{board.id}}&list_id={{list.id}}">+</a>Add card</h4>
+	<td>
 	</tr>
+	</table>
 {% endblock %}

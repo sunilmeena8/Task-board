@@ -7,6 +7,9 @@
 	{% for personal_board in personal_boards %}
 		<td>
 		<a href="/personal_board_lists/?id={{personal_board.id}}">{{personal_board.title}}</a>
+		<br>
+		<a href="/edittitlepersonalboard/?board_id={{personal_board.id}}">Edit</a>
+		<a href="/deletepersonalboard/?board_id={{personal_board.id}}">Delete</a>
 		</td>
 	{% endfor %}
 	<td>

@@ -26,4 +26,11 @@ urlpatterns = [
     path('addteamboardlistcard/',views.add_team_board_list_card),
     path('addteamboardmember/',views.add_team_board_member),
     path('teamboardmember/',views.team_board_member),
+    path('edittitleteamboard/',views.edit_title_team_board),
+    path('deleteteamboard/',views.delete_team_board),
+    path('edittitleteamboardlist/',views.edit_title_team_board_list),
+    path('deleteteamboardlist/',views.delete_team_board_list),
+    path('edittitleteamboardlistcard/',views.edit_team_board_list_card),
+    path('deleteteamboardlistcard/',views.delete_team_board_list_card),
+    path('archiveteamboardlistcard/',views.archive_team_board_list_card),
 ]

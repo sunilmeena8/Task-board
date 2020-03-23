@@ -14,7 +14,6 @@ def team_board(request):
 def team_board_list(request):
 	user= request.user
 	board_id = request.GET.get('id')
-	print(board_id)
 	board = TeamBoard.objects.get(id=board_id)
 	# print(board.id,board.title)
 	lists = TeamBoardList.objects.filter(board=board)
@@ -68,26 +67,26 @@ def add_team_board_list(request):
 def add_team_board_list_card(request):
 	user=request.user
 	if(request.method=='POST'):
-		form = AddBoardListCardForm(request.POST,request.FILES)
-		if(form.is_valid()):
-			title = form.cleaned_data.get('title')
-			due_date = form.cleaned_data.get('due_date')
-			attachment = request.FILES['attachment']
-			list_id = request.POST.get('list_id',None)
-			list = TeamBoardList.objects.get(id= list_id)
-			card = TeamBoardListCard()
-			card.list = list
-			card.title = title
-			card.due_date = due_date
-			card.attachment = attachment
-			card.archived= False
-			card.save()
-			return(redirect('team_board'))
-	else:
-		form = AddBoardListCardForm()
-	list_id = request.GET.get('id')
-	
-	return(render(request,"team_board_system/addboardlistcard.html",{'form':form,"list_id":list_id}))
+		
+		title = request.POST.get('title')
+		due_date = request.POST.get('due_date')
+		attachment = request.FILES['attachment']
+		list_id = request.POST.get('list_id',None)
+		list = TeamBoardList.objects.get(id= list_id)
+		card = TeamBoardListCard()
+		card.list = list
+		card.title = title
+		card.due_date = due_date
+		card.attachment = attachment
+		card.archived= False
+		card.save()
+		return(redirect('team_board'))
+	board_id = request.GET.get('board_id')
+	list_id = request.GET.get('list_id')
+	# print(board_id,list_id)
+	board = TeamBoard.objects.get(id=board_id)
+	list = TeamBoardList.objects.get(id = list_id)
+	return(render(request,"team_board_system/addboardlistcard.html",{"list":list,"board":board}))
 
 def add_team_board_member(request):
 	user=request.user
@@ -98,7 +97,6 @@ def add_team_board_member(request):
 			username = form.cleaned_data.get('username')
 			add_user = User.objects.get(username = username)
 			add_user_id = add_user.id
-			print(board_id,add_user_id)
 			cursor = connection.cursor()
 			cursor.execute('insert into team_board_system_teamboard_user (teamboard_id,user_id) values (%s,%s)',[board_id,add_user_id])
 			return(redirect('team_board'))
@@ -118,3 +116,91 @@ def team_board_member(request):
 	board = TeamBoard.objects.get(id=board_id)
 	
 	return(render(request,'team_board_system/teamboardmembers.html',{'members':members,'board':board}))
+
+def edit_title_team_board(request):
+	user=request.user
+	if(request.method=='POST'):
+		title = request.POST.get('title')
+		board_id = request.POST.get('board_id')
+		id = user.id
+		board = TeamBoard(id = board_id)
+		board.title = title
+		board.save()
+		return(redirect('team_board'))
+
+	board_id = request.GET.get('board_id')
+	board = TeamBoard.objects.get(id=board_id)
+	return(render(request,"personal_board_system/editboard.html",{'board':board}))
+
+def delete_team_board(request):
+	board_id = request.GET.get('board_id')
+	board = TeamBoard.objects.get(id = board_id)
+	board.delete()
+	return(redirect('team_board'))
+
+def edit_title_team_board_list(request):
+	user=request.user
+	if(request.method=='POST'):
+		title = request.POST.get('title')
+		list_id = request.POST.get('list_id')
+		id = user.id
+		list = TeamBoardList.objects.get(id=list_id)
+		list.title= title
+		list.save()
+		return(redirect('team_board'))
+	
+	board_id = request.GET.get('board_id')
+	list_id = request.GET.get('list_id')
+	board = TeamBoard.objects.get(id=board_id)
+	
+	list = TeamBoardList.objects.get(id = list_id)
+	return(render(request,"personal_board_system/editboardlist.html",{'board':board,'list':list}))
+
+def delete_team_board_list(request):
+	board_id = request.GET.get('board_id')
+	list_id = request.GET.get('list_id')
+	list = TeamBoardList.objects.get(id= list_id)
+	list.delete()
+	return(redirect('team_board'))
+
+
+def edit_team_board_list_card(request):
+	user=request.user
+	if(request.method=='POST'):
+		title = request.POST.get('title')
+		due_date = request.POST.get('due_date')
+		attachment = request.POST.get('attachment')
+		list_id = request.POST.get('list_id')
+		board_id = request.POST.get('board_id')
+		card_id = request.POST.get('card_id')
+		id = user.id
+		card = TeamBoardListCard.objects.get(id = card_id)
+		card.title = title
+		card.due_date = due_date
+		card.attachment = attachment
+		card.save()
+		return(redirect('team_board'))
+	# else:
+	# 	form = AddBoardForm()
+	board_id = request.GET.get('board_id')
+	board = TeamBoard.objects.get(id=board_id)
+	list_id = request.GET.get('list_id')
+	list = TeamBoardList.objects.get(id = list_id)
+	card_id = request.GET.get('card_id')
+	card = TeamBoardListCard.objects.get(id= card_id)
+	return(render(request,"personal_board_system/editboardlistcard.html",{'board':board,'list':list,'card':card}))
+
+def delete_team_board_list_card(request):
+	board_id = request.GET.get('board_id')
+	list_id = request.GET.get('list_id')
+	card_id = request.GET.get('card_id')
+	card = TeamBoardListCard.objects.get(id= card_id)
+	card.delete()
+	return(redirect('team_board'))
+
+def archive_team_board_list_card(request):
+	card_id = request.GET.get('card_id')
+	card = TeamBoardListCard.objects.get(id = card_id)
+	card.archived=True
+	card.save()
+	return(redirect('team_board'))

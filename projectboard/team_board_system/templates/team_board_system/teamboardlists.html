@@ -8,6 +8,10 @@
 	{% for team_board_list in team_board_lists %}
 		<td>
 		<a href="/team_board_list_cards/?list_id={{team_board_list.id}}&board_id={{board.id}}">{{team_board_list.title}}</a>
+		<br>
+		<a href="/edittitleteamboardlist/?board_id={{board.id}}&list_id={{team_board_list.id}}">Edit</a>
+		<a href="/deleteteamboardlist/?board_id={{board.id}}&list_id={{team_board_list.id}}">Delete</a>
+		
 	</td>
 	{% endfor %}
 	<td>

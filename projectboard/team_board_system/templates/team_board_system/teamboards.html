@@ -7,7 +7,11 @@
 	{% for team_board in team_boards %}
 		<td>
 		<a href="/team_board_lists/?id={{team_board.id}}">{{team_board.title}}</a>
-		<p><a href="/teamboardmember/?id={{team_board.id}}">Members</a></h4>
+		<p><a href="/teamboardmember/?id={{team_board.id}}">Members</a></p>
+		
+		<a href="/edittitleteamboard/?board_id={{team_board.id}}">Edit</a>
+		<a href="/deleteteamboard/?board_id={{team_board.id}}">Delete</a>
+		
 		</td>
 	{% endfor %}
 	<td>

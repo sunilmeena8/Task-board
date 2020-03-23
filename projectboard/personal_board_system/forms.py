@@ -12,3 +12,10 @@ class AddBoardListCardForm(forms.Form):
 	due_date = forms.DateField()
 	attachment = forms.FileField()
 
+class EditBoardForm(forms.Form):
+	title = forms.CharField(max_length=100)
+
+class EditListForm(forms.Form):
+	title = forms.CharField(max_length=100)
+
+

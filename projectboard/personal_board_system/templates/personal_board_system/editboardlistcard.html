@@ -1,0 +1,15 @@
+{% extends 'accounts/header.html' %}
+{% block content %}
+	<h3>Edit board list card</h3>
+	<form method="POST">
+		{% csrf_token %}
+		Title: <input type="text" name="title" value="{{card.title}}">
+		<br><br>
+		Due date: <input type="datetime-local" name="due_date" value="{{card.due_date}}">
+		<br><br>
+		Attachment: <input type="file" name="attachment" value="{{card.attachment}}">
+		<input type="hidden" name="card_id" value={{card.id}}>
+		<br><br>
+		<button type="submit">Add</button>
+	</form>
+{% endblock %}

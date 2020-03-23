@@ -24,4 +24,15 @@ urlpatterns = [
     path('addpersonalboard/',views.add_personal_board),
     path('addpersonalboardlist/',views.add_personal_board_list),
     path('addpersonalboardlistcard/',views.add_personal_board_list_card),
+    path('edittitlepersonalboard/',views.edit_title_personal_board),
+    path('deletepersonalboard/',views.delete_personal_board),
+    path('edittitlepersonalboardlist/',views.edit_title_personal_board_list),
+    path('deletepersonalboardlist/',views.delete_personal_board_list),
+    path('edittitlepersonalboardlistcard/',views.edit_personal_board_list_card),
+    path('deletepersonalboardlistcard/',views.delete_personal_board_list_card),
+    path('archivepersonalboardlistcard/',views.archive_personal_board_list_card),
+    
+    # path('edittitlepersonalboardlist/',views.edit_title_personal_board_list),
+    # path('editpersonalboardlistcard/',views.edit_title_personal_board_list_card),
+    
 ]

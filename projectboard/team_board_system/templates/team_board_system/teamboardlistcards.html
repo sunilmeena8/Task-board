@@ -1,22 +1,29 @@
 {% extends "accounts/header.html" %}
 {% block content %}
 	
-	<h2><a href="/personal_board">Personal Board</a>->{{board.title}}->{{list.title}}</h2>
+	<h2><a href="/team_board">Team Board</a>-><a href="/team_board_lists/?id={{board.id}}">{{board.title}}</a>->{{list.title}}</h2>
 	<br><br>
 	<table border=1px solid >
-	<tr>
+	
 	{% for team_board_list_card in team_board_list_cards %}
 		{% if team_board_list_card.archived == False %}
+		<tr>
 		<td>
 		<p>Title: {{team_board_list_card.title}}</p>
 		<p> Due date: {{team_board_list_card.due_date}}</p>
 		<p> Attachment: {{team_board_list_card.attachment}}</p>
+		<br>
+		<a href="/edittitleteamboardlistcard/?card_id={{team_board_list_card.id}}&board_id={{board.id}}&list_id={{list.id}}">Edit</a>
+		<a href="/deleteteamboardlistcard/?card_id={{team_board_list_card.id}}&board_id={{board.id}}&list_id={{list.id}}">Delete</a>
+		<a href="/archiveteamboardlistcard/?card_id={{team_board_list_card.id}}&board_id={{board.id}}&list_id={{list.id}}">Archive</a>
 		</td>
+		</tr>
 		{% endif %}
 	{% endfor %}
 	
+	<tr>
 	<td>
-	<h4><a href="/addteamboardlistcard/?id={{list.id}}">+</a>Addboardlistcard</h4>
+	<h4><a href="/addteamboardlistcard/?board_id={{board.id}}&list_id={{list.id}}">+</a>Addboardlistcard</h4>
 	</td>
 	</tr>
 {% endblock %}

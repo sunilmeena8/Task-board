@@ -1,0 +1,11 @@
+{% extends 'accounts/header.html' %}
+{% block content %}
+	<h3>Edit board list</h3>
+	<form method="POST">
+		{% csrf_token %}
+		Title: <input name="title" type="text"  value="{{ list.title }}">
+		<input type="hidden" name="list_id" value={{list.id}}>
+		<input type="hidden" name="board_id" value={{board.id}}>
+		<button type="submit">Save</button>
+	</form>
+{% endblock %}
