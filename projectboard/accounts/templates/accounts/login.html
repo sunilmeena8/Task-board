@@ -1,9 +1,62 @@
-{% extends "accounts/header.html" %}
-{% block content %}
-	<h3> LogIn </h3>
-	<form method='POST'>
-		{%csrf_token%}
-		{{form.as_p}}
-		<button type='submit'>LogIn</button>
-	</form>
-{% endblock %}
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="description" content="Login - Register Template">
+    <meta name="author" content="Lorenzo Angelino aka MrLolok">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="stylesheet" href="main.css"> {% endcomment %}
+	{% load static %}
+  	<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/login.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            background-color: #303641;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container-login">
+        <div id="title">
+            <i class="material-icons lock">lock</i> Login
+        </div>
+
+        <form method="POST">
+			{% csrf_token %}
+            <div class="input">
+                <div class="input-addon">
+                    <i class="material-icons">face</i>
+                </div>
+				{{form.username.errors}}
+				{{form.username}}
+                {% comment %} <input id="username" placeholder="Username" type="text" required class="validate" autocomplete="off"> {% endcomment %}
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="input">
+                <div class="input-addon">
+                    <i class="material-icons">vpn_key</i>
+                </div>
+				{{form.password}}
+                {% comment %} <input id="password" placeholder="Password" type="password" required class="validate" autocomplete="off"> {% endcomment %}
+            </div>
+
+            <input type="submit" value="Log In" />
+        </form>
+
+        {% comment %} <div class="forgot-password">
+            <a href="#">Forgot your password?</a>
+        </div> {% endcomment %}
+        
+
+        <div class="register">
+            Don't have an account yet?
+            <a href="/register"><button id="register-link">Register here</button></a>
+        </div>
+    </div>
+</body>
+
+</html>
