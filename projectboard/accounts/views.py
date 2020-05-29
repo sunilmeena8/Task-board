@@ -32,10 +32,16 @@ def login_req(request):
 def register(request):
 	if(request.method=='POST'):
 		form = UserCreationForm(request.POST)
+		print(form)
+		print("yes")
 		if(form.is_valid()):
+			print("yes1")
+			
 			form.save()
 			username = form.cleaned_data.get('username')
 			raw_password = form.cleaned_data.get('password1')
+			email = request.POST.get('email')
+			print(email)
 			user = authenticate(username=username,password=raw_password)
 			login(request,user)
 			return(redirect('homepage'))
