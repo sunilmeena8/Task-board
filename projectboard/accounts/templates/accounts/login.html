@@ -29,11 +29,11 @@
                 <div class="input-addon">
                     <i class="material-icons">face</i>
                 </div>
-				{{form.username.errors}}
+				
 				{{form.username}}
                 {% comment %} <input id="username" placeholder="Username" type="text" required class="validate" autocomplete="off"> {% endcomment %}
             </div>
-
+            
             <div class="clearfix"></div>
 
             <div class="input">
@@ -43,6 +43,11 @@
 				{{form.password}}
                 {% comment %} <input id="password" placeholder="Password" type="password" required class="validate" autocomplete="off"> {% endcomment %}
             </div>
+            
+            {% for error in messages %}
+                <p style="color: red">{{ error }} </p>
+                {{ break }}
+            {% endfor %}
 			<br>
             <input type="submit" value="Log In" />
         </form>

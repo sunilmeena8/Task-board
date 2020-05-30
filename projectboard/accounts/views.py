@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from personal_board_system.models import PersonalBoard
+from .forms import SignUpForm
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def homeview(request):
@@ -11,19 +14,24 @@ def homeview(request):
 		boards = PersonalBoard.objects.filter(user=user)
 		
 		return(render(request,'accounts/home.html',{'user':user,'boards':boards}))
-		
+	if(user.is_staff):
+		logout_req(request)
 	return(render(request,'accounts/home.html',{}))
 
 def login_req(request):
 	if(request.method=='POST'):
 		form = AuthenticationForm(request,data=request.POST)
+		print(form)
 		if(form.is_valid()):
 			username = form.cleaned_data.get('username')
 			password = form.cleaned_data.get('password')
 			user = authenticate(username=username,password=password)
 			if(user is not None):
 				login(request,user)
-				return(redirect('homepage'))
+			return(redirect('homepage'))
+		else:
+			messages.error(request,"Invalid username or password")
+			return(redirect('login'))
 	else:
 		form = AuthenticationForm()
 
@@ -31,22 +39,18 @@ def login_req(request):
 
 def register(request):
 	if(request.method=='POST'):
-		form = UserCreationForm(request.POST)
-		print(form)
-		print("yes")
+		form = SignUpForm(request.POST)
 		if(form.is_valid()):
-			print("yes1")
-			
 			form.save()
 			username = form.cleaned_data.get('username')
 			raw_password = form.cleaned_data.get('password1')
-			email = request.POST.get('email')
-			print(email)
 			user = authenticate(username=username,password=raw_password)
-			login(request,user)
+			if(user is not None):
+				login(request,user)
 			return(redirect('homepage'))
+			
 	else:
-		form = UserCreationForm()
+		form = SignUpForm()
 	return(render(request,'accounts/register.html',{'form':form}))
 
 def logout_req(request):

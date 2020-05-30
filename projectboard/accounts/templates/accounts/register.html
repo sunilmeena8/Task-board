@@ -42,17 +42,21 @@
 				{{ form.username }}
                 {% comment %} <input id="username" placeholder="Username" type="text" required class="validate" autocomplete="off"> {% endcomment %}
             </div>
-
+            {% for error in form.username.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
             <div class="clearfix"></div>
 
 			<div class="input">
                 <div class="input-addon">
                     <i class="material-icons">email</i>
                 </div>
-				{% comment %} {{ form.email }} {% endcomment %}
-                <input id="email" placeholder="Email" type="email" required class="validate" autocomplete="off">
+				{{ form.email }}
+                {% comment %} <input id="email" name = "email" placeholder="Email" type="email" required class="validate" autocomplete="off"> {% endcomment %}
             </div>
-
+            {% for error in form.email.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
             <div class="clearfix"></div>
 
             <div class="input">
@@ -62,6 +66,9 @@
 				{{ form.password1 }}
                 {% comment %} <input id="password" placeholder="Password" type="password" required class="validate" autocomplete="off"> {% endcomment %}
             </div>
+            {% for error in form.password1.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
 
 			<div class="input">
                 <div class="input-addon">
@@ -70,9 +77,12 @@
 				{{ form.password2 }}
                 {% comment %} <input id="password" placeholder="Password" type="password" required class="validate" autocomplete="off"> {% endcomment %}
             </div>
-			
-
-            <button type="submit">Submit</button>
+            {% for error in form.password2.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
+			<br>
+            <input type="submit" value="Register" />
+            
         </form>
 
         <div class="register">
