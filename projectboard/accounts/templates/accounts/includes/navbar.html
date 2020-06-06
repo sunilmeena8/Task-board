@@ -3,11 +3,13 @@
 <div class="topnav">
       <a href="/" class="nav">T-Board</a>
         {% if user.is_authenticated %}
-          <a href="/myaccount" class="nav">{{user.username}}</a>
-          <a href="/logout" class="nav">Logout</a>
+          <a href="/logout" class="nav rit">Logout</a>  
+          <a href="/myaccount" class="nav rit">{{user.username}}</a>
+          
         {% else %}
-          <a href="/login" class="nav">LogIn</a>
-          <a href="/register" class="nav">Register</a>
+        <a href="/register" class="nav rit">Register</a>  
+        <a href="/login" class="nav rit">LogIn</a>
+          
         {% endif %}
 </div>
 

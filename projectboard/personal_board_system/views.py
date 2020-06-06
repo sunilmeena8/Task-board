@@ -2,19 +2,25 @@ from django.shortcuts import render,redirect
 from django.db import connection
 from .forms import AddBoardForm,AddBoardListForm,AddBoardListCardForm,EditBoardForm,EditListForm
 from .models import PersonalBoard,PersonalBoardList,PersonalBoardListCard
+from datetime import datetime
 
 # Create your views here.
 def personal_board(request):
 	user = request.user
 	boards = PersonalBoard.objects.filter(user=user)
-	
-	return(render(request,'personal_board_system/personalboards.html',{'personal_boards':boards}))
+	cursor = connection.cursor()
+	cursor.execute("select * from personal_board_system_personalboard order by last_viewed desc limit 5")
+	recent_boards = cursor.fetchall()
+	# print(recent_boards)
+	return(render(request,'personal_board_system/personalboards.html',{'personal_boards':boards,'recent_boards':recent_boards}))
 
 def personal_board_list(request):
 	user= request.user
 	
 	board_id = request.GET.get('id')
 	board = PersonalBoard.objects.get(id=board_id)
+	board.last_viewed = datetime.now()
+	board.save()
 	# print(board.id,board.title)
 	lists = PersonalBoardList.objects.filter(board=board)
 	
@@ -45,7 +51,7 @@ def add_personal_board(request):
 			title = form.cleaned_data.get('title')
 			id = user.id
 			cursor = connection.cursor()
-			cursor.execute('insert into personal_board_system_personalboard (user_id,title) values (%s,%s)',[id,title])
+			cursor.execute('insert into personal_board_system_personalboard (user_id,title,last_viewed) values (%s,%s,%s)',[id,title,datetime.now()])
 			return(redirect('personal_board'))
 	# else:
 	# 	form = AddBoardForm()

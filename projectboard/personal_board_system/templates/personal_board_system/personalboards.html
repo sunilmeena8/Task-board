@@ -1,5 +1,27 @@
-{% extends "accounts/header.html" %}
-{% block content %}
+<!doctype html>
+<head>
+  {% load static %}
+  {% load placeholder %}
+  <link rel="stylesheet" type="text/css" href="{% static 'accounts.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'personal_board_system/personalboard.css' %}">
+  
+  
+</head>
+<body>
+  	{% include "accounts/includes/navbar.html" %}
+	<h2>Recent</h2>
+	<br><br>
+	<ul class="list-boards">
+	{% for recent_board in recent_boards %}
+		<div class="container">
+		<li class="list-board-item">
+			<a class="board-tile" href="/personal_board_lists/?id={{recent_board.id}}">{{recent_board.1}}</a>
+			
+		</li>
+		</div>
+	{% endfor %}
+	</ul>
+	<br>
 	<h2>Personal Board</h2>
 	<br><br>
 	<table border=1px solid >
@@ -17,4 +39,5 @@
 	</td>
 	</tr>
 	</table>
-{% endblock %}
+</body>
+</html>

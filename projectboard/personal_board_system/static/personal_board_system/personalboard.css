@@ -1,0 +1,21 @@
+.container {
+    
+    /* background-color: aqua; */
+    display: inline;
+}
+
+.list-board-item {
+    padding: 10px 10px;
+    background-color: antiquewhite;
+    display: inline;
+    
+    margin-right: 10px;
+}
+
+ul {
+    list-style: none;
+
+}
+a {
+    color: black;
+}
