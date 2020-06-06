@@ -19,39 +19,47 @@ def homeview(request):
 	return(render(request,'accounts/home.html',{}))
 
 def login_req(request):
-	if(request.method=='POST'):
-		form = AuthenticationForm(request,data=request.POST)
-		print(form)
-		if(form.is_valid()):
-			username = form.cleaned_data.get('username')
-			password = form.cleaned_data.get('password')
-			user = authenticate(username=username,password=password)
-			if(user is not None):
-				login(request,user)
-			return(redirect('homepage'))
+	user = request.user
+	if(not user.is_authenticated):
+		if(request.method=='POST'):
+			form = AuthenticationForm(request,data=request.POST)
+			
+			if(form.is_valid()):
+				username = form.cleaned_data.get('username')
+				password = form.cleaned_data.get('password')
+				user = authenticate(username=username,password=password)
+				if(user is not None):
+					login(request,user)
+				return(redirect('homepage'))
+			else:
+				messages.error(request,"Invalid username or password")
+				return(redirect('login'))
 		else:
-			messages.error(request,"Invalid username or password")
-			return(redirect('login'))
-	else:
-		form = AuthenticationForm()
+			form = AuthenticationForm()
 
-	return(render(request,'accounts/login.html',{'form':form}))
+		return(render(request,'accounts/login.html',{'form':form}))
+	else:
+		return(redirect('homepage'))
 
 def register(request):
-	if(request.method=='POST'):
-		form = SignUpForm(request.POST)
-		if(form.is_valid()):
-			form.save()
-			username = form.cleaned_data.get('username')
-			raw_password = form.cleaned_data.get('password1')
-			user = authenticate(username=username,password=raw_password)
-			if(user is not None):
-				login(request,user)
-			return(redirect('homepage'))
-			
+	user = request.user
+	if(not user.is_authenticated):
+		if(request.method=='POST'):
+			form = SignUpForm(request.POST)
+			if(form.is_valid()):
+				form.save()
+				username = form.cleaned_data.get('username')
+				raw_password = form.cleaned_data.get('password1')
+				user = authenticate(username=username,password=raw_password)
+				if(user is not None):
+					login(request,user)
+				return(redirect('homepage'))
+				
+		else:
+			form = SignUpForm()
+		return(render(request,'accounts/register.html',{'form':form}))
 	else:
-		form = SignUpForm()
-	return(render(request,'accounts/register.html',{'form':form}))
+		return(redirect('homepage'))
 
 def logout_req(request):
 	logout(request)

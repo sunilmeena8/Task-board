@@ -1,13 +1,3 @@
-{% comment %} {% extends 'accounts/header.html' %}
-{% block content %}
-	<h1>Register</h1>
-	<form method="POST">
-	{% csrf_token %}
-	
-	{{form.as_p}}
-	<button type="submit">Signup</button>
-	</button>
-{% endblock %} {% endcomment %}
 
 <html>
 
@@ -16,17 +6,19 @@
     <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	{% load static %}
-  	<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/login.css' %}">
+  	<link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         body {
-            background-color: #303641;
+            background-color: #333;
         }
     </style>
 </head>
 
 <body>
+     <div id="heading">Task Board </div>
+    
     <div id="container-register">
         <div id="title">
             <i class="material-icons lock">lock</i> Register

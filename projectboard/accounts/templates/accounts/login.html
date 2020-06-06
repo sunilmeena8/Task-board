@@ -6,9 +6,8 @@
     <meta name="description" content="Login - Register Template">
     <meta name="author" content="Lorenzo Angelino aka MrLolok">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% comment %} <link rel="stylesheet" href="main.css"> {% endcomment %}
 	{% load static %}
-  	<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/login.css' %}">
+  	<link rel="stylesheet"  href="{% static 'login.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         body {
@@ -18,6 +17,7 @@
 </head>
 
 <body>
+    <div id="heading">Task Board </div>
     <div id="container-login">
         <div id="title">
             <i class="material-icons lock">lock</i> Login
@@ -41,7 +41,6 @@
                     <i class="material-icons">vpn_key</i>
                 </div>
 				{{form.password}}
-                {% comment %} <input id="password" placeholder="Password" type="password" required class="validate" autocomplete="off"> {% endcomment %}
             </div>
             
             {% for error in messages %}

@@ -9,7 +9,7 @@ body {
 #container-login {
     background-color: #1D1F20;
     position: relative;
-    top: 20%;
+    top: 10%;
     margin: auto;
     width: 340px;
     height: 445px;
@@ -21,7 +21,7 @@ body {
 #container-register {
     background-color: #1D1F20;
     position: relative;
-    top: 20%;
+    top: 10%;
     margin: auto;
     width: 340px;
     height: 480px;
@@ -39,6 +39,18 @@ body {
     font-size: 22px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+#heading {
+    margin-left: 46%;
+    margin-top: 4%;
+    margin-bottom: 0;
+    /* position: relative; */
+    
+    padding: 20px 0px;
+    font-size: 25px;
+    
+}
+
 
 .lock {
 	position: relative;
@@ -187,4 +199,14 @@ input[type=submit] {
     border: 0 none;
     cursor: pointer;
     border-radius: 3px;
+}
+
+.heading {
+    position: relative;
+    background-color: #1A1C1D;
+    width: 100%;
+    padding: 20px 0px;
+    border-radius: 0.35em;
+    font-size: 100px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
