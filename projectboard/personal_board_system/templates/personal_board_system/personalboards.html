@@ -1,43 +1,54 @@
 <!doctype html>
+
 <head>
-  {% load static %}
-  {% load placeholder %}
-  <link rel="stylesheet" type="text/css" href="{% static 'accounts.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'personal_board_system/personalboard.css' %}">
-  
-  
+	{% load static %}
+	{% load placeholder %}
+	<link rel="stylesheet" type="text/css" href="{% static 'accounts.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'personal_board_system/personalboard.css' %}">
+
+
 </head>
+
 <body>
-  	{% include "accounts/includes/navbar.html" %}
+	{% include "accounts/includes/navbar.html" %}
 	<h2>Recent</h2>
-	<br><br>
+
 	<ul class="list-boards">
-	{% for recent_board in recent_boards %}
+		{% for recent_board in recent_boards %}
 		<div class="container">
-		<li class="list-board-item">
-			<a class="board-tile" href="/personal_board_lists/?id={{recent_board.id}}">{{recent_board.1}}</a>
-			
-		</li>
+			<a class="board-tile" href="/personal_board_lists/?id={{recent_board.0}}">
+				<li class="list-board-item">
+					{{recent_board.1}}
+
+				</li>
+			</a>
 		</div>
-	{% endfor %}
+		{% endfor %}
 	</ul>
 	<br>
 	<h2>Personal Board</h2>
-	<br><br>
-	<table border=1px solid >
-	<tr>
-	{% for personal_board in personal_boards %}
-		<td>
-		<a href="/personal_board_lists/?id={{personal_board.id}}">{{personal_board.title}}</a>
-		<br>
-		<a href="/edittitlepersonalboard/?board_id={{personal_board.id}}">Edit</a>
-		<a href="/deletepersonalboard/?board_id={{personal_board.id}}">Delete</a>
-		</td>
-	{% endfor %}
-	<td>
-	<h4><a href="/addpersonalboard">+</a>Addboard</h4>
-	</td>
-	</tr>
-	</table>
+	<ul class="list-boards">
+		{% for personal_board in personal_boards %}
+		<div class="container">
+			<a class="board-tile" href="/personal_board_lists/?id={{personal_board.id}}">
+				<li class="list-board-item">
+					{{personal_board.title}}
+					<a href="/edittitlepersonalboard/?board_id={{personal_board.id}}">Edit</a>
+					<a href="/deletepersonalboard/?board_id={{personal_board.id}}">Delete</a>
+				</li>
+			</a>
+		</div>
+		{% endfor %}
+		<a href="/addpersonalboard/?id={{board.id}}">
+			<li class="list-board-item">
+				Add personal board
+				
+			</li>
+		</a>
+
+	</ul>
+
+	
 </body>
+
 </html>

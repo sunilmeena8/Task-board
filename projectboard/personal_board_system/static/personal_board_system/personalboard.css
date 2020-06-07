@@ -5,11 +5,11 @@
 }
 
 .list-board-item {
-    padding: 10px 10px;
-    background-color: antiquewhite;
+    padding: 5px 50px 50px 5px;
+    background-color: aquamarine;
     display: inline;
-    
-    margin-right: 10px;
+    border-radius: 10%;
+    margin-right: 20px;
 }
 
 ul {
