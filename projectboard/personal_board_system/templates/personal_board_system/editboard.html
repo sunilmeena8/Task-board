@@ -1,10 +1,23 @@
-{% extends 'accounts/header.html' %}
-{% block content %}
-	<h3>Edit board</h3>
+<!doctype html>
+
+<head>
+	{% load static %}
+	{% load placeholder %}
+	<link rel="stylesheet" type="text/css" href="{% static 'accounts.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'personal_board_system/personalboard.css' %}">
+
+
+</head>
+
+<body>
+	{% include "accounts/includes/navbar.html" %}
+	<h2>Add board</h2>
 	<form method="POST">
 		{% csrf_token %}
 		Title: <input name="title" type="text"  value="{{ board.title }}">
 		<input type="hidden" name="board_id" value={{board.id}}>
 		<button type="submit">Save</button>
+		<button><a href="/personal_board">Cancel</a></button>
 	</form>
-{% endblock %}
+</body>
+

@@ -3,6 +3,8 @@ from django.db import connection
 from .forms import AddBoardForm,AddBoardListForm,AddBoardListCardForm,EditBoardForm,EditListForm
 from .models import PersonalBoard,PersonalBoardList,PersonalBoardListCard
 from datetime import datetime
+from urllib.parse import urlencode
+from django.urls import reverse
 
 # Create your views here.
 def personal_board(request):
@@ -45,37 +47,31 @@ def personal_board_list_card(request):
 
 def add_personal_board(request):
 	user=request.user
-	if(request.method=='GET'):
-		form = AddBoardForm(request.GET)
-		if(form.is_valid()):
-			title = form.cleaned_data.get('title')
-			id = user.id
-			cursor = connection.cursor()
-			cursor.execute('insert into personal_board_system_personalboard (user_id,title,last_viewed) values (%s,%s,%s)',[id,title,datetime.now()])
-			return(redirect('personal_board'))
-	# else:
-	# 	form = AddBoardForm()
-	return(render(request,"personal_board_system/addboard.html",{'form':form}))
+	if(request.method=='POST'):
+		title = request.POST['title']
+		id = user.id
+		cursor = connection.cursor()
+		cursor.execute('insert into personal_board_system_personalboard (user_id,title,last_viewed) values (%s,%s,%s)',[id,title,datetime.now()])
+		return(redirect('personal_board'))
+	
+	return(render(request,"personal_board_system/addboard.html"))
 
 
 def add_personal_board_list(request):
 	user=request.user
 	
-	if(request.method=='GET'):
-		form = AddBoardListForm(request.GET)
+	if(request.method=='POST'):
+		title = request.POST['title']
+		board_id = request.POST['board_id']
 		
-		if(form.is_valid()):
-			title = form.cleaned_data.get('title')
-
-			board_id = request.GET.get('board_id')
-			
-			cursor = connection.cursor()
-			cursor.execute('insert into personal_board_system_personalboardlist (board_id,title) values (%s,%s)',[board_id,title])
-			return(redirect('personal_board'))
-	else:
-		form = AddBoardListForm()
+		cursor = connection.cursor()
+		cursor.execute('insert into personal_board_system_personalboardlist (board_id,title) values (%s,%s)',[board_id,title])
+		base_url = reverse('personal_board_list') 
+		query_string =  urlencode({'id': board_id}) 
+		url = '{}?{}'.format(base_url, query_string) 
+		return(redirect(url))
 	board_id = request.GET.get('id')
-	return(render(request,"personal_board_system/addboardlist.html",{'form':form,"board_id":board_id}))
+	return(render(request,"personal_board_system/addboardlist.html",{"board_id":board_id}))
 
 def add_personal_board_list_card(request):
 	user=request.user
@@ -126,14 +122,17 @@ def delete_personal_board(request):
 def edit_title_personal_board_list(request):
 	user=request.user
 	if(request.method=='POST'):
-		title = request.POST.get('title')
-		list_id = request.POST.get('list_id')
+		title = request.POST['title']
+		list_id = request.POST['list_id']
+		board_id = request.POST['board_id']
 		id = user.id
 		cursor = connection.cursor()
 		cursor.execute('update personal_board_system_personalboardlist set title=%s where id = %s',[title,list_id])
-		return(redirect('personal_board'))
-	# else:
-	# 	form = AddBoardForm()
+		base_url = reverse('personal_board_list') 
+		query_string =  urlencode({'id': board_id}) 
+		url = '{}?{}'.format(base_url, query_string) 
+		return(redirect(url))
+		
 	board_id = request.GET.get('board_id')
 	board = PersonalBoard.objects.get(id=board_id)
 	list_id = request.GET.get('list_id')
@@ -145,7 +144,10 @@ def delete_personal_board_list(request):
 	list_id = request.GET.get('list_id')
 	list = PersonalBoardList.objects.get(id= list_id)
 	list.delete()
-	return(redirect('personal_board'))
+	base_url = reverse('personal_board_list') 
+	query_string =  urlencode({'id': board_id}) 
+	url = '{}?{}'.format(base_url, query_string) 
+	return(redirect(url))
 
 def edit_personal_board_list_card(request):
 	user=request.user
