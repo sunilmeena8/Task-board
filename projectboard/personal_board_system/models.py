@@ -19,3 +19,4 @@ class PersonalBoardListCard(models.Model):
 	due_date = models.DateTimeField()
 	attachment = models.FileField()
 	archived = models.BooleanField()
+	description = models.CharField(max_length=200)

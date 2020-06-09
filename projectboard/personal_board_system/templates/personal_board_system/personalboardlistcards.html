@@ -1,9 +1,20 @@
-{% extends "accounts/header.html" %}
-{% block content %}
+<!doctype html>
+
+<head>
+	{% load static %}
+	{% load placeholder %}
+	<link rel="stylesheet" type="text/css" href="{% static 'accounts.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'personal_board_system/personalboard.css' %}">
+
+
+</head>
+
+<body>
+	{% include "accounts/includes/navbar.html" %}
+
 	<h2><a href="/personal_board">Personal Board</a>->{{board.title}}->{{list.title}}</h2>
 	<br><br>
 	<table border=1px solid >
-	
 	
 	{% for personal_board_list_card in personal_board_list_cards %}
 		{% if personal_board_list_card.archived == False %}
@@ -11,6 +22,7 @@
 		<td>
 		<p>Title: {{personal_board_list_card.title}}  </p>
 		<p>Due date: {{personal_board_list_card.due_date}}</p>
+		<p>Description: {{personal_board_list_card.description}}</p>
 		<p>Attachment: <embed src="media/{{personal_board_list_card.attachment}}" width="80px" height="100px" /></p>
 
 		<a href="/edittitlepersonalboardlistcard/?board_id={{board.id}}&list_id={{list.id}}&card_id={{personal_board_list_card.id}}">Edit</a>
@@ -27,4 +39,4 @@
 	<td>
 	</tr>
 	</table>
-{% endblock %}
+</body>

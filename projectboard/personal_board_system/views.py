@@ -80,7 +80,7 @@ def add_personal_board_list_card(request):
 		title = request.POST.get('title')
 		due_date = request.POST.get('due_date')
 		attachment = request.FILES['attachment']
-		# attachment = request.POST.get('attachment')
+		description = request.POST.get('description')
 		list_id = request.POST.get('list_id',None)
 		list = PersonalBoardList.objects.get(id= list_id)
 		card = PersonalBoardListCard()
@@ -88,8 +88,12 @@ def add_personal_board_list_card(request):
 		card.title = title
 		card.due_date = due_date
 		card.attachment = attachment
-		card.archived= False
+		card.description = description
+		card.archived = False
 		card.save()
+		query_string =  urlencode({'id': board_id,}) 
+		url = '{}?{}'.format(base_url, query_string) 
+		return(redirect(url))
 		return(redirect('personal_board'))
 	board_id = request.GET.get('board_id')
 	list_id = request.GET.get('list_id')
