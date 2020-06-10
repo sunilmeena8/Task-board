@@ -16,7 +16,7 @@ class PersonalBoardList(models.Model):
 class PersonalBoardListCard(models.Model):
 	list = models.ForeignKey(PersonalBoardList,on_delete=models.CASCADE,related_name="board_list_cards")
 	title = models.CharField(max_length = 100)
-	due_date = models.DateTimeField()
+	due_date = models.DateTimeField(null=True)
 	attachment = models.FileField()
 	archived = models.BooleanField()
 	description = models.CharField(max_length=200)

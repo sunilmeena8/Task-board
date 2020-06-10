@@ -36,7 +36,7 @@ def personal_board_list_card(request):
 	if(temp is not None):
 		list_id = temp
 	board_id = request.GET.get('board_id')
-
+	print(list_id)
 	list = PersonalBoardList.objects.get(id=list_id)
 	board = PersonalBoard.objects.get(id=board_id)
 	cards = PersonalBoardListCard.objects.filter(list=list)
@@ -79,9 +79,14 @@ def add_personal_board_list_card(request):
 		
 		title = request.POST.get('title')
 		due_date = request.POST.get('due_date')
-		attachment = request.FILES['attachment']
+		try:
+			attachment = request.FILES['attachment']	
+		except:
+			attachment = None
+		
 		description = request.POST.get('description')
 		list_id = request.POST.get('list_id',None)
+		board_id = request.POST.get('board_id',None)
 		list = PersonalBoardList.objects.get(id= list_id)
 		card = PersonalBoardListCard()
 		card.list = list
@@ -91,10 +96,10 @@ def add_personal_board_list_card(request):
 		card.description = description
 		card.archived = False
 		card.save()
-		query_string =  urlencode({'id': board_id,}) 
+		base_url = reverse('personal_board_list_card')
+		query_string =  urlencode({'board_id': board_id,'list_id':list_id}) 
 		url = '{}?{}'.format(base_url, query_string) 
 		return(redirect(url))
-		return(redirect('personal_board'))
 	board_id = request.GET.get('board_id')
 	list_id = request.GET.get('list_id')
 	print(board_id,list_id)
@@ -157,7 +162,9 @@ def edit_personal_board_list_card(request):
 	user=request.user
 	if(request.method=='POST'):
 		title = request.POST.get('title')
-		due_date = request.POST.get('due_date')
+		
+		due_date = request.POST.get('due_date')	
+		
 		attachment = request.POST.get('attachment')
 		list_id = request.POST.get('list_id')
 		board_id = request.POST.get('board_id')
@@ -165,12 +172,16 @@ def edit_personal_board_list_card(request):
 		id = user.id
 		card = PersonalBoardListCard.objects.get(id = card_id)
 		card.title = title
-		card.due_date = due_date
+		if(due_date != ""):
+			card.due_date = due_date
 		card.attachment = attachment
 		card.save()
-		return(redirect('personal_board'))
-	# else:
-	# 	form = AddBoardForm()
+		base_url = reverse('personal_board_list_card')
+		print(board_id,list_id,"yes")
+		query_string =  urlencode({'board_id': board_id,'list_id':list_id}) 
+		url = '{}?{}'.format(base_url, query_string) 
+		return(redirect(url))
+	
 	board_id = request.GET.get('board_id')
 	board = PersonalBoard.objects.get(id=board_id)
 	list_id = request.GET.get('list_id')
@@ -185,7 +196,10 @@ def delete_personal_board_list_card(request):
 	card_id = request.GET.get('card_id')
 	card = PersonalBoardListCard.objects.get(id= card_id)
 	card.delete()
-	return(redirect('personal_board'))
+	base_url = reverse('personal_board_list_card')
+	query_string =  urlencode({'board_id': board_id,'list_id':list_id}) 
+	url = '{}?{}'.format(base_url, query_string) 
+	return(redirect(url))
 
 def archive_personal_board_list_card(request):
 	card_id = request.GET.get('card_id')
