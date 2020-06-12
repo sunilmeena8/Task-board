@@ -1,0 +1,39 @@
+<!doctype html>
+
+<head>
+	{% load static %}
+	{% load placeholder %}
+	<link rel="stylesheet" type="text/css" href="{% static 'accounts.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'personal_board_system/personalboard.css' %}">
+</head>
+
+<body>
+	{% include "accounts/includes/navbar.html" %}
+
+	<h2><a href="/personal_board">Personal Board</a>-><a href="/personal_board_lists/?id={{board.id}}">{{board.title}}</a>-><a href="/personal_board_list_cards/?list_id={{list.id}}&board_id={{board.id}}">{{list.title}}</a>->archived</h2>
+	<br><br>
+	{% if archived_cards %}
+	<table border=1px solid >
+	
+	{% for archived_card in archived_cards %}
+		<tr>
+		<td>
+		<p>Title: {{archived_card.title}}  </p>
+		<p>Due date: {{archived_card.due_date}}</p>
+		<p>Description: {{archived_card.description}}</p>
+		<p>Attachment: <embed src="media/{{archived_card.attachment}}" width="80px" height="100px" /></p>
+		<a href ="/unarchivepersonalboardlistcard/?board_id={{board.id}}&list_id={{list.id}}&card_id={{archived_card.id}}">UnArchive</a>
+		<a href="/deletepersonalboardlistcard/?list_id={{list.id}}&board_id={{board.id}}&card_id={{archived_card.id}}">Delete</a>
+		</td>
+		</tr>
+	{% endfor %}
+	
+	<tr>
+	<td>
+	<td>
+	</tr>
+	</table>
+	{% else %}
+		<p> No Archived cards</p>
+	{% endif %}
+</body>

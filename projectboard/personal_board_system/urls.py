@@ -32,7 +32,8 @@ urlpatterns = [
     path('deletepersonalboardlistcard/',views.delete_personal_board_list_card),
     path('archivepersonalboardlistcard/',views.archive_personal_board_list_card),
     
-    # path('edittitlepersonalboardlist/',views.edit_title_personal_board_list),
+    path('archived/',views.archived,name = "archived"),
+    path('unarchivepersonalboardlistcard/',views.unarchive),
     # path('editpersonalboardlistcard/',views.edit_title_personal_board_list_card),
     
 ]

@@ -40,8 +40,6 @@ def personal_board_list_card(request):
 	list = PersonalBoardList.objects.get(id=list_id)
 	board = PersonalBoard.objects.get(id=board_id)
 	cards = PersonalBoardListCard.objects.filter(list=list)
-	for i in cards:
-		print(i.attachment)
 		
 	return(render(request,"personal_board_system/personalboardlistcards.html",{'list':list,"board":board,'personal_board_list_cards':cards}))
 
@@ -91,7 +89,10 @@ def add_personal_board_list_card(request):
 		card = PersonalBoardListCard()
 		card.list = list
 		card.title = title
-		card.due_date = due_date
+		if(due_date != ""):
+			card.due_date = due_date
+		
+		
 		card.attachment = attachment
 		card.description = description
 		card.archived = False
@@ -177,7 +178,7 @@ def edit_personal_board_list_card(request):
 		card.attachment = attachment
 		card.save()
 		base_url = reverse('personal_board_list_card')
-		print(board_id,list_id,"yes")
+		
 		query_string =  urlencode({'board_id': board_id,'list_id':list_id}) 
 		url = '{}?{}'.format(base_url, query_string) 
 		return(redirect(url))
@@ -203,7 +204,34 @@ def delete_personal_board_list_card(request):
 
 def archive_personal_board_list_card(request):
 	card_id = request.GET.get('card_id')
+	list_id = request.GET.get("list_id")
+	board_id = request.GET.get("board_id")
 	card = PersonalBoardListCard.objects.get(id = card_id)
 	card.archived=True
 	card.save()
-	return(redirect('personal_board'))
+	base_url = reverse('personal_board_list_card')
+	query_string =  urlencode({'board_id': board_id,'list_id':list_id}) 
+	url = '{}?{}'.format(base_url, query_string) 
+	return(redirect(url))
+
+def archived(request):
+	list_id = request.GET.get("list_id")
+	
+	list = PersonalBoardList.objects.get(id = list_id)
+	board_id = request.GET.get("board_id")
+	board = PersonalBoard.objects.get(id = board_id)
+	cards = PersonalBoardListCard.objects.filter(list= list,archived=True)
+	
+	return(render(request,"personal_board_system/archived.html",{"list":list,"archived_cards":cards,"board":board}))
+	
+def unarchive(request):
+	card_id = request.GET.get('card_id')
+	list_id = request.GET.get("list_id")
+	board_id = request.GET.get("board_id")
+	card = PersonalBoardListCard.objects.get(id = card_id)
+	card.archived=False
+	card.save()
+	base_url = reverse('archived')
+	query_string =  urlencode({'board_id': board_id,'list_id':list_id}) 
+	url = '{}?{}'.format(base_url, query_string) 
+	return(redirect(url))
